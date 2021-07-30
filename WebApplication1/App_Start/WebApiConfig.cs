@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -29,16 +30,4 @@ namespace WebApplication1
 
         }
     }
-
-    //public class ActionResponseFilter : ActionFilterAttribute
-    //{
-    //    public override void OnActionExecuted(HttpActionExecutedContext actionExecutedContext)
-    //    {
-    //        actionExecutedContext.Response.TryGetContentValue<IAcrActionResult>(out var acrActionResult);
-    //        if (acrActionResult is AcrObjectResult<>)
-    //        {
-                
-    //        }
-    //    }
-    //}
 }
