@@ -53,8 +53,6 @@ namespace WebAPI.Service1
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseRouting();
 
             app.UseAuthorization();

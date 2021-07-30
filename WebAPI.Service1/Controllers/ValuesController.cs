@@ -39,14 +39,13 @@ namespace WebAPI.Service1
 
     public interface IHttpActionResult { }
 
-
     public class AcrObjectResult<TValue> : IHttpStatusCodeActionResult, IActionResult
     {
-        public AcrObjectResult(HttpStatusCode statusCode, TValue value, HttpRequest requestMessage)
+        public AcrObjectResult(HttpStatusCode statusCode, TValue value, HttpRequest request)
         {
             StatusCode = statusCode;
             Value = value;
-            RequestMessage = requestMessage;
+            RequestMessage = request;
         }
 
         public HttpStatusCode StatusCode { get; }
