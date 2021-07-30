@@ -7,33 +7,19 @@ using System.Web.Http;
 
 namespace Mvc5WebApiApp.Controllers
 {
-    public class ValuesController : ApiController
+    public class Car
     {
-        // GET api/values
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        public string Make { get; set; }
+        public string Model { get; set; }
+    }
 
-        // GET api/values/5
-        public string Get(int id)
+    public class CarsController : ApiController
+    {
+        [HttpGet]
+        [Route("api/car")]
+        public IHttpActionResult Get()
         {
-            return "value";
-        }
-
-        // POST api/values
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/values/5
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/values/5
-        public void Delete(int id)
-        {
+            return Ok<Car>(new Car { Make = "Tesla" });
         }
     }
 }
