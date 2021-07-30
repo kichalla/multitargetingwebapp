@@ -1,12 +1,15 @@
-﻿using AutoMapper;
-using Serilog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+#if NETFRAMEWORK
 using System.Web.Http;
+#else
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+#endif
 
 namespace WebAPI.Service1
 {
@@ -26,14 +29,44 @@ namespace WebAPI.Service1
         }
     }
 
-    public interface IAcrActionResult { }
-
-    public interface IAcrStatusCodeActionResult : IAcrActionResult
+    public interface IHttpStatusCodeActionResult : IHttpActionResult
     {
         HttpStatusCode StatusCode { get; }
     }
 
-    public class AcrObjectResult<TValue> : IHttpActionResult, IAcrStatusCodeActionResult
+#if !NETFRAMEWORK
+    public abstract class ApiController : ControllerBase { }
+
+    public interface IHttpActionResult { }
+
+
+    public class AcrObjectResult<TValue> : IHttpStatusCodeActionResult, IActionResult
+    {
+        public AcrObjectResult(HttpStatusCode statusCode, TValue value, HttpRequest requestMessage)
+        {
+            StatusCode = statusCode;
+            Value = value;
+            RequestMessage = requestMessage;
+        }
+
+        public HttpStatusCode StatusCode { get; }
+
+        public TValue Value { get; }
+
+        public HttpRequest RequestMessage { get; }
+
+        public Task ExecuteResultAsync(ActionContext context)
+        {
+            var result = new ObjectResult(Value)
+            {
+                DeclaredType = typeof(TValue),
+                StatusCode = (int)StatusCode
+            };
+            return result.ExecuteResultAsync(context);
+        }
+    }
+#else
+    public class AcrObjectResult<TValue> : IHttpStatusCodeActionResult
     {
         public AcrObjectResult(HttpStatusCode statusCode, TValue value, HttpRequestMessage requestMessage)
         {
@@ -54,4 +87,5 @@ namespace WebAPI.Service1
             return Task.FromResult(response);
         }
     }
+#endif
 }
