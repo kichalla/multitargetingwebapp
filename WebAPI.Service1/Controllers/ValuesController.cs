@@ -22,12 +22,15 @@ namespace WebAPI.Service1
         [Route("api/car")]
         public IHttpActionResult Get()
         {
+            var clientRequestId = Request.GetClientRequestId();
+
             return CreateResult(
                 HttpStatusCode.OK, 
                 new Car { Make = "Tesla", Model = "Model S" },
                 headers: new Dictionary<string, string> 
                 { 
-                    ["header1"] = "header1-value"
+                    ["header1"] = "header1-value",
+                    ["clientrequestid"] = clientRequestId
                 },
                 reasonPhrase: "custom phrase here");
         }
