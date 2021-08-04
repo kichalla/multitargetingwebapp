@@ -1,4 +1,6 @@
 ﻿using System.Net;
+using System.Collections.Generic;
+using System;
 #if NETFRAMEWORK
 using System.Web.Http;
 #else
@@ -14,13 +16,20 @@ namespace WebAPI.Service1
         public string Model { get; set; }
     }
 
-    public class CarsController : ApiController
+    public class CarsController : ApiControllerBase
     {
         [HttpGet]
         [Route("api/car")]
         public IHttpActionResult Get()
         {
-            return new AcrObjectResult<Car>(HttpStatusCode.OK, new Car { Make = "Tesla" }, Request);
+            return CreateResult(
+                HttpStatusCode.OK, 
+                new Car { Make = "Tesla", Model = "Model S" },
+                headers: new Dictionary<string, string> 
+                { 
+                    ["header1"] = "header1-value"
+                },
+                reasonPhrase: "custom phrase here");
         }
     }
 }
