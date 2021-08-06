@@ -71,8 +71,6 @@ namespace WebAPI.Service1
         }
     }
 #else
-    public abstract class ApiController : ControllerBase { }
-
     public interface IHttpActionResult { }
 
     public class AcrStatusCodeResult : IHttpStatusCodeActionResult, IActionResult
