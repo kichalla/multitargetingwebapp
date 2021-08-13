@@ -20,7 +20,7 @@ namespace WebAPI.Service1
     {
         [HttpGet]
         [Route("api/car")]
-        public IHttpActionResult Get()
+        public IActionResult Get()
         {
             var clientRequestId = Request.GetClientRequestId();
 
