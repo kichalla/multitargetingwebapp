@@ -11,7 +11,7 @@ namespace WebAPI.Service1
 {
     public class ApiControllerBase : ApiController
     {
-        public IActionResult CreateResult<TValue>(
+        internal IActionResult CreateResult<TValue>(
             HttpStatusCode httpStatusCode,
             TValue value,
             IDictionary<string, string> headers = null,

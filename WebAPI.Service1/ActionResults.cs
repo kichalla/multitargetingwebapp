@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Http.Features;
 
 namespace WebAPI.Service1
 {
-    public interface IStatusCodeActionResult : IActionResult
+    internal interface IStatusCodeActionResult : IActionResult
     {
         HttpStatusCode StatusCode { get; }
     }
@@ -21,7 +21,7 @@ namespace WebAPI.Service1
 #if NETFRAMEWORK
     public interface IActionResult: IHttpActionResult { }
 
-    public class AcrStatusCodeResult : IStatusCodeActionResult
+    internal class AcrStatusCodeResult : IStatusCodeActionResult
     {
         public AcrStatusCodeResult(HttpStatusCode statusCode)
         {
@@ -36,7 +36,7 @@ namespace WebAPI.Service1
         }
     }
 
-    public class AcrObjectResult<TValue> : IStatusCodeActionResult
+    internal class AcrObjectResult<TValue> : IStatusCodeActionResult
     {
         public AcrObjectResult(HttpStatusCode statusCode, TValue value, HttpRequestMessage request)
         {
@@ -74,7 +74,7 @@ namespace WebAPI.Service1
     }
 #else
 
-    public class AcrStatusCodeResult : IStatusCodeActionResult
+    internal class AcrStatusCodeResult : IStatusCodeActionResult
     {
         public AcrStatusCodeResult(HttpStatusCode statusCode)
         {
@@ -90,7 +90,7 @@ namespace WebAPI.Service1
         }
     }
 
-    public class AcrObjectResult<TValue> : IStatusCodeActionResult
+    internal class AcrObjectResult<TValue> : IStatusCodeActionResult
     {
         public AcrObjectResult(HttpStatusCode statusCode, TValue value, HttpRequest request)
         {
